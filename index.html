@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>普通話水平測試 - 朗讀作品難點字詞練習</title>
+    <style>
+        :root {
+            --header-bg: #FFFBF5;       /* 🎨 最新要求的標題底色 */
+            --bg-color: #f4f7f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --hover-bg: #FBF9F1;        /* 🎨 點擊/懸停時的板塊底色 */
+            --hover-border: #AAD7D9;    /* 🎨 點擊/懸停時的邊框顏色 */
+            --disabled-bg: #e9ecef;
+            --disabled-text: #999999;
+        }
+
+        body {
+            /* 圓體字體棧：Mac (Yuanti SC), Windows (YouYuan) */
+            font-family: 'Yuanti SC', 'YouYuan', 'STYuanti', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .top-title {
+            font-size: 1.1rem;
+            color: #444444; /* 配合新的底色，稍微加深字體顏色以確保清晰度 */
+            margin-bottom: 8px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem; 
+            font-weight: 600;
+            color: #222222;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #444444; /* 配合新的底色，稍微加深字體顏色 */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            padding-bottom: 50px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column; /* 讓文字上下分排 */
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        /* 作品號碼樣式 */
+        .work-num {
+            font-size: 0.95rem;
+            color: #666666;
+            margin-bottom: 6px;
+            font-weight: normal;
+            transition: color 0.3s ease;
+        }
+
+        /* 作品名稱樣式 */
+        .work-name {
+            font-size: 1.15rem;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        /* 🎨 正常卡片的懸停及點擊效果（套用新色號） */
+        .card:not(.disabled):hover, .card:not(.disabled):active {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+            background-color: var(--hover-bg);
+            border-color: var(--hover-border);
+        }
+
+        .card:not(.disabled):hover .work-num, 
+        .card:not(.disabled):active .work-num {
+            color: #555555;
+        }
+
+        /* 尚未有網址的卡片樣式 */
+        .card.disabled {
+            background-color: var(--disabled-bg);
+            box-shadow: none;
+            cursor: not-allowed;
+            border: 2px solid transparent; /* 保持無邊框效果 */
+        }
+
+        /* 未完成的卡片文字全部變灰 */
+        .card.disabled .work-num,
+        .card.disabled .work-name {
+            color: var(--disabled-text);
+        }
+
+        @media (max-width: 600px) {
+            .top-title { font-size: 0.95rem; }
+            h1 { font-size: 1.5rem; }
+            .subtitle { font-size: 0.85rem; }
+            .container { margin: 20px auto; }
+            .grid { grid-template-columns: 1fr; gap: 12px; }
+            .work-name { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-title">普通話水平測試</div>
+        <h1>朗讀作品難點字詞練習</h1>
+        <p class="subtitle">網頁僅供VTC内部使用。訓練局普通話培訓測試中心版權所有。</p>
+    </header>
+
+    <main class="container">
+        <div class="grid" id="works-grid">
+            <!-- JavaScript 自動生成卡片 -->
+        </div>
+    </main>
+
+    <script>
+        // 50個作品數據庫
+        const worksData = [
+            { title: "作品1號《北京的春節》", url: "https://echo02-game.github.io/pscwords01-01/" },
+            { title: "作品2號《春》", url: "https://echo02-game.github.io/pscwords02-01/" },
+            { title: "作品3號《匆匆》", url: "https://echo02-game.github.io/pscwords03-01/" },
+            { title: "作品4號《聰明在於學習，天才在於積累》", url: "" },
+            { title: "作品5號《大匠無名》", url: "" },
+            { title: "作品6號《大自然的語言》", url: "" },
+            { title: "作品7號《當今“千里眼”》", url: "" },
+            { title: "作品8號《鼎湖山聽泉》", url: "" },
+            { title: "作品9號《讀書人是幸福人》", url: "" },
+            { title: "作品10號《繁星》", url: "" },
+            { title: "作品11號《觀潮》", url: "" },
+            { title: "作品12號《孩子和秋風》", url: "" },
+            { title: "作品13號《海濱仲夏夜》", url: "" },
+            { title: "作品14號《海洋與生命》", url: "" },
+            { title: "作品15號《華夏文明的發展與融合》", url: "" },
+            { title: "作品16號《記憶像鐵軌一樣長》", url: "" },
+            { title: "作品17號《將心比心》", url: "" },
+            { title: "作品18號《晉祠》", url: "" },
+            { title: "作品19號《敬畏自然》", url: "" },
+            { title: "作品20號《看戲》", url: "" },
+            { title: "作品21號《蓮花和櫻花》", url: "" },
+            { title: "作品22號《麻雀》", url: "" },
+            { title: "作品23號《莫高窟》", url: "" },
+            { title: "作品24號《“能吞能吐”的森林》", url: "" },
+            { title: "作品25號《清塘荷韻》", url: "" },
+            { title: "作品26號《驅遣我們的想象》", url: "" },
+            { title: "作品27號《人類的語言》", url: "" },
+            { title: "作品28號《人生如下棋》", url: "" },
+            { title: "作品29號《十渡遊趣》", url: "" },
+            { title: "作品30號《世界民居奇葩》", url: "" },
+            { title: "作品31號《蘇州園林》", url: "" },
+            { title: "作品32號《泰山極頂》", url: "" },
+            { title: "作品33號《天地九重》", url: "" },
+            { title: "作品34號《我的老師》", url: "" },
+            { title: "作品35號《我喜歡出發》", url: "" },
+            { title: "作品36號《鄉下人家》", url: "" },
+            { title: "作品37號《鳥的天堂》", url: "" },
+            { title: "作品38號《夜間飛行的秘密》", url: "" },
+            { title: "作品39號《一幅名揚中外的畫》", url: "" },
+            { title: "作品40號《一粒種子造福世界》", url: "" },
+            { title: "作品41號《頤和園》", url: "" },
+            { title: "作品42號《憶讀書》", url: "" },
+            { title: "作品43號《閱讀大地的徐霞客》", url: "" },
+            { title: "作品44號《紙的發明》", url: "" },
+            { title: "作品45號《中國的寶島——臺灣》", url: "" },
+            { title: "作品46號《中國的牛》", url: "" },
+            { title: "作品47號《中國石拱橋》", url: "" },
+            { title: "作品48號《“住”的夢》", url: "" },
+            { title: "作品49號《走下領獎臺，一切從零開始》", url: "" },
+            { title: "作品50號《最糟糕的發明》", url: "" }
+        ];
+
+        const grid = document.getElementById('works-grid');
+
+        worksData.forEach(work => {
+            const card = document.createElement('a');
+            
+            // 使用正則表達式將「作品X號」與「《XXX》」分離
+            const titleMatch = work.title.match(/(作品\d+號)(.*)/);
+            let htmlContent = "";
+            
+            if (titleMatch) {
+                const workNum = titleMatch[1]; // 例如：作品1號
+                const workName = titleMatch[2]; // 例如：《北京的春節》
+                htmlContent = `<div class="work-num">${workNum}</div><div class="work-name">${workName}</div>`;
+            } else {
+                htmlContent = `<div class="work-name">${work.title}</div>`;
+            }
+            
+            card.innerHTML = htmlContent;
+
+            if (work.url && work.url.trim() !== "") {
+                card.href = work.url;
+                card.className = 'card';
+            } else {
+                card.href = 'javascript:void(0);';
+                card.className = 'card disabled';
+                card.onclick = function() {
+                    alert("該作品的詞卡網頁尚未完成，敬請期待！");
+                };
+            }
+
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+</html>
