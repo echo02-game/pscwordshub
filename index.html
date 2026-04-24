@@ -137,11 +137,54 @@
             .grid { grid-template-columns: 1fr; gap: 12px; }
             .work-name { font-size: 1.1rem; }
         }
+
+        /* 返回按鈕樣式 */
+        .back-btn {
+            position: absolute;
+            top: 14px;
+            left: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 13px;
+            background-color: #ffffff;
+            color: #444444;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1.5px solid #BADFDB;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            white-space: nowrap;
+            z-index: 10;
+        }
+        .back-btn:hover, .back-btn:active {
+            background-color: var(--hover-bg);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.10);
+        }
+        /* header 需要 position:relative 以供按鈕定位，同時加 padding-top 確保標題不被遮擋 */
+        header {
+            position: relative;
+            padding-top: 55px;
+        }
+        @media (max-width: 600px) {
+            .back-btn {
+                font-size: 0.78rem;
+                padding: 6px 10px;
+                top: 10px;
+                left: 10px;
+            }
+            header {
+                padding-top: 50px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <header>
+        <a href="https://echo02-game.github.io/pttcgamehub/" class="back-btn" target="_blank">&#8592; 返回普通話自修室</a>
         <div class="top-title">普通話水平測試</div>
         <h1>朗讀作品難點字詞練習</h1>
         <p class="subtitle">網頁僅供VTC内部使用。訓練局普通話培訓測試中心版權所有。</p>
@@ -229,6 +272,8 @@
 
             if (work.url && work.url.trim() !== "") {
                 card.href = work.url;
+                card.target = '_blank';
+                card.rel = 'noopener noreferrer';
                 card.className = 'card';
             } else {
                 card.href = 'javascript:void(0);';
